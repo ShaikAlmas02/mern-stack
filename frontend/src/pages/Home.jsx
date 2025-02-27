@@ -1,39 +1,26 @@
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import "../App.css";  // Import CSS
 
-function Home() {
+const Home = () => {
+  const [username, setUsername] = useState("");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("username");
+    if (!storedUser) {
+      navigate("/login");
+    } else {
+      setUsername(storedUser);
+    }
+  }, []);
+
   return (
-    <div style={styles.container}>
-      <h1 style={styles.title}>Welcome to Zomato Clone</h1>
-      <p style={styles.subtitle}>Find the best restaurants near you!</p>
-
+    <div className="container">
+      <h2 className="welcome-text">Welcome,to home page!</h2>
+      <button onClick={() => { localStorage.removeItem("username"); navigate("/login"); }}>Logout</button>
     </div>
   );
-}
-
-const styles = {
-  container: {
-    textAlign: "center",
-    padding: "50px",
-    backgroundColor: "#f8f9fa",
-    backgroundImage: "url('frontend/src/pages/download.jpeg')",
-    height: "100vh",
-  },
-  title: { fontSize: "28px", color: "#ff5733" },
-  subtitle: { fontSize: "18px", marginBottom: "20px" },
-  linkContainer: { display: "flex", justifyContent: "center", gap: "20px" },
-  button: {
-    padding: "10px 20px",
-    textDecoration: "none",
-    backgroundColor: "#ff5733",
-    color: "white",
-    borderRadius: "5px",
-    fontSize: "16px",
-  },
 };
 
 export default Home;
-
-
-
-
-
